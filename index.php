@@ -183,32 +183,25 @@ if (file_exists('/home/'.$username.'/.startup')) {
 }
 
 if (file_exists('/usr/sbin/repquota')) {
-      $dftotal = shell_exec("sudo /usr/sbin/repquota /|/bin/grep ^".$username."|/usr/bin/awk '{printf \$4/1024/1024}'");
-      $dffree = shell_exec("sudo /usr/sbin/repquota /|/bin/grep ^".$username."|/usr/bin/awk '{printf (\$4-\$3)/1024/1024}'");
-      $dfused = shell_exec("sudo /usr/sbin/repquota /|/bin/grep ^".$username."|/usr/bin/awk '{printf \$3/1024/1024}'");
-      $perused = sprintf('%1.0f', $dfused / $dftotal * 100);
+    $dftotal = shell_exec("sudo /usr/sbin/repquota /|/bin/grep ^".$username."|/usr/bin/awk '{printf \$4/1024/1024}'");
+    $dffree = shell_exec("sudo /usr/sbin/repquota /|/bin/grep ^".$username."|/usr/bin/awk '{printf (\$4-\$3)/1024/1024}'");
+    $dfused = shell_exec("sudo /usr/sbin/repquota /|/bin/grep ^".$username."|/usr/bin/awk '{printf \$3/1024/1024}'");
+    $perused = sprintf('%1.0f', $dfused / $dftotal * 100);
 
-  } else {
-
-      $bytesfree = disk_free_space('/home'.$username);
-      $class = min((int)log($bytesfree,$base),count($si_prefix) - 1); $bytestotal = disk_total_space($location);
-      $class = min((int)log($bytesfree,$base),count($si_prefix) - 1); $bytesused = $bytestotal - $bytesfree;
-        try {
-          $diskStatus = new DiskStatus('/home'.$username);
-          $freeSpace = $diskStatus->freeSpace();
-          $totalSpace = $diskStatus->totalSpace();
-          $barWidth = ($diskStatus->usedSpace()/500) * 500;
-        } catch (Exception $e) {
-          $spacebodyerr .= 'Error ('.$e-getMessage().')';
+} else {
+    try {
+        $diskStatus = new DiskStatus('/home/'.$username);
+        $freeSpace = $diskStatus->freeSpace();
+        $totalSpace = $diskStatus->totalSpace();
+		$usedSpace = $diskStatus->totalSpace()-$diskStatus->freeSpace();
+    } catch (Exception $e) {
+        $spacebodyerr .= 'Error ('.$e-getMessage().')';
         exit();
-          }
-      $dffree .= ''.sprintf('%1.2f',$bytesfree / pow($base,$class)) //.'<b>'.$si_prefix[$class].'</b> Free<br/>'
-      ;
-      $dfused .= ''.sprintf('%1.2f',$bytesused / pow($base,$class)) //.'<b>'.$si_prefix[$class].'</b> Used<br/>'
-      ;
-      $dftotal .= ''.sprintf('%1.2f',$bytestotal / pow($base,$class)) //.'<b>'.$si_prefix[$class].'</b> Total<br/>'
-      ;
-      $perused = sprintf('%1.0f', $bytesused / $bytestotal * 100);
+    }
+    $dffree = $diskStatus->addUnits($freeSpace); //.'<b>'.$si_prefix[$class].'</b> Free<br/>'
+    $dfused = $diskStatus->addUnits($usedSpace); //.'<b>'.$si_prefix[$class].'</b> Used<br/>'
+    $dftotal = $diskStatus->addUnits($totalSpace); //.'<b>'.$si_prefix[$class].'</b> Total<br/>'
+    $perused = sprintf('%1.0f', $usedSpace * 100 / $totalSpace);
 }
 
 if (file_exists('/home/'.$username.'/.sessions/rtorrent.lock')) {
