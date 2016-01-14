@@ -27,8 +27,9 @@ public function addUnits($bytes) {
 	$units = array( 'B', 'KB', 'MB', 'GB', 'TB' );
 	for($i = 0; $bytes >= 1024 && $i < count($units) - 1; $i++ ) {
 		$bytes /= 1024;
-		$retour = round($bytes, 1).' '.$units[$i];
+
 	}
+		$retour = round($bytes, 1).' '.$units[$i];
 		return $retour;
 	}
 }
