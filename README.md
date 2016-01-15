@@ -1,5 +1,14 @@
 A fork based on QuickBox to use the dasboard on any installation of rutorrent.
 
+
+For install put anywhere your webserver can deserve,
+Change path in conf.php with absolute rutorrent path
+Change mediaplayer if you use emby or plex
+
+
+
+
+
 A greatly thanks to the creator ! https://jmsolodesigns.com/code-projects/quick-box/seedbox-installer
 
 
