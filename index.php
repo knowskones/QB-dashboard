@@ -173,16 +173,16 @@ $username = getUser();
               <div class="panel-body">
                 <ul class="list-unstyled mb20">
                   <li>
-                    <?php echo "$rval"; ?>
+                    <?php echo "$return1"; ?>
                   </li>
                   <li>
-                    <?php echo "$ival"; ?>
+                    <?php echo "$return2"; ?>
                   </li>
                   <li>
-                    <?php echo "$bval"; ?>
+                    <?php echo "$return3"; ?>
                   </li>
                   <li>
-                    <?php echo "$pval"; ?>
+                    <?php echo "$return4"; ?>
                   </li>
                 </ul>
               </div>

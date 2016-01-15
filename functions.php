@@ -15,16 +15,6 @@ function processExists($processName, $username) {
   return $exists;
 }
 
-function isEnabled($search, $username){
-  $string = file_get_contents('/home/'.$username.'/.startup');
-  $service = $search;
-  if(preg_match("/\b".$search."\b/", $string)){
-    return " <div class=\"toggle-wrapper pull-right\"><div class=\"toggle-en toggle-light primary\" onclick=\"location.href='?id=77&serviceend=$service'\"></div></div>";
-  } else {
-    return " <div class=\"toggle-wrapper pull-right\"><div class=\"toggle-dis toggle-light primary\" onclick=\"location.href='?id=66&servicestart=$service'\"></div></div>";
-  }
-}
-
 function writeMsg($message) {
   $file = $GLOBALS['MSGFILE'];
   $Handle = fopen("/tmp/" . $file, 'w');
@@ -52,20 +42,32 @@ $service='';
 
 
 
-if ($rtorrent == "1") { $rval = "RTorrent <span class=\"label label-success pull-right\">Enabled</span>"; 
-} else { $rval = "RTorrent <span class=\"label label-danger pull-right\">Disabled</span>";
+if ($svc1 == "1") { 
+	$return1 = ucfirst($service1)." <span class=\"label label-success pull-right\">Enabled</span>"; 
+}
+else { 
+	$return1 = ucfirst($service1)." <span class=\"label label-danger pull-right\">Disabled</span>";
 }
 
-if ($docker == "1") { $ival = "Docker <span class=\"label label-success pull-right\">Enabled</span>"; 
-} else { $ival = "Docker <span class=\"label label-danger pull-right\">Disabled</span>";
+if ($svc2 == "1") { 
+	$return2 = ucfirst($service2)." <span class=\"label label-success pull-right\">Enabled</span>"; 
+} 
+else { 
+	$return2 = ucfirst($service2)."r <span class=\"label label-danger pull-right\">Disabled</span>";
 }
 
-if ($btsync == "1") { $bval = "BTSync <span class=\"label label-success pull-right\">Enabled</span>"; 
-} else { $bval = "BTSync <span class=\"label label-danger pull-right\">Disabled</span>";
+if ($svc3 == "1") { 
+	$return3 = ucfirst($service3)." <span class=\"label label-success pull-right\">Enabled</span>"; 
+} 
+else { 
+	$return3 = ucfirst($service3)." <span class=\"label label-danger pull-right\">Disabled</span>";
 }
 
-if ($medplayer == "1") { $pval = $medname." <span class=\"label label-success pull-right\">Enabled</span>"; 
-} else { $pval = "Emby <span class=\"label label-danger pull-right\">Disabled</span>";
+if ($svc4 == "1") { 
+	$return4 = ucfirst($service4)." <span class=\"label label-success pull-right\">Enabled</span>"; 
+} 
+else { 
+	$return4 = ucfirst($service4)." <span class=\"label label-danger pull-right\">Disabled</span>";
 }
 
 $base = 1024;
