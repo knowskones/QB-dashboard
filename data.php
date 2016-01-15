@@ -1,5 +1,6 @@
 <?php
-$int="eth0";
+include 'conf.php';
+$int=$interface;
 session_start();
 $rx[] = @file_get_contents("/sys/class/net/$int/statistics/rx_bytes");
 $tx[] = @file_get_contents("/sys/class/net/$int/statistics/tx_bytes");

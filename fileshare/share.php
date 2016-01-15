@@ -1,7 +1,8 @@
 <?php
+include '../conf.php';
 if(!isset($_GET['uh'])) {die('Invalid link');}
 $_SERVER['REMOTE_USER'] = base64_decode($_GET['uh']);
-require_once( dirname(__FILE__)."/../../php/util.php" );
+require_once( dirname(__FILE__).$path."php/util.php" );
 
 //if(getConfFile('config.php') === FALSE) {die('No such file');}
 echo getConfFile();
